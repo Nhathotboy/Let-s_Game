@@ -163,32 +163,50 @@ const App = () => {
     <div className="app-container">
       <h3>{headingText}</h3>
 
-      <div style={{ marginBottom: '10px' }}> 
-        Points:{" "}
-        <input
-          type="number"
-          min="1" 
-          value={totalNumbersInput}
-          onChange={(e) => {
-            const val = e.target.value;
-            if (val === "") {
-              setTotalNumbersInput("");
-              return;
-            }
-            if (/^\d+$/.test(val)) {
-              const num = parseInt(val, 10);
-              if (num >= 1) { 
-                setTotalNumbersInput(val);
-                setTotalNumbers(num);
-              }
-            }
-          }}
-          disabled={gameStarted && !gameOver && !gameCompleted}
-        />
-      </div>
 
-      <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}> 
-        Time: {time.toFixed(1)}
+      <div style={{ marginBottom: '10px' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          marginBottom: '5px',
+          fontSize: '1.1em',
+          fontWeight: 500
+        }}>
+          <span style={{ display: 'inline-block', width: 60, textAlign: 'left' }}>Points:</span>
+          <input
+            type="number"
+            min="1"
+            value={totalNumbersInput}
+            onChange={(e) => {
+              const val = e.target.value;
+              if (val === "") {
+                setTotalNumbersInput("");
+                return;
+              }
+              if (/^\d+$/.test(val)) {
+                const num = parseInt(val, 10);
+                if (num >= 1) {
+                  setTotalNumbersInput(val);
+                  setTotalNumbers(num);
+                }
+              }
+            }}
+            disabled={gameStarted && !gameOver && !gameCompleted}
+            style={{ width: 50, marginLeft: 10 }}
+          />
+        </div>
+        
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          fontSize: '1.1em',
+          fontWeight: 500
+        }}>
+          <span style={{ display: 'inline-block', width: 60, textAlign: 'left' }}>Time:</span>
+          <span style={{ marginLeft: 10 }}>{time.toFixed(1)}s</span>
+        </div>
       </div>
 
       {!gameStarted ? (
@@ -219,13 +237,30 @@ const App = () => {
               top: num.y,
               left: num.x,
               zIndex: totalNumbers - num.id, 
-      pointerEvents: gameOver || gameCompleted ? "none" : "auto"
+              pointerEvents: gameOver || gameCompleted ? "none" : "auto",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
             onClick={() => handleClick(num.id)}
           >
-            {num.id}
+            <div style={{ 
+              fontSize: '0.9em', 
+              color: '#000000ff', 
+              fontWeight: 'bold',
+              textAlign: 'center',
+              lineHeight: 1
+            }}>
+              {num.id}
+            </div>
     {activeCountdowns.has(num.id) && numberTimers[num.id] !== undefined && (
-              <div style={{ fontSize: '0.65em', marginTop: 2 }}>
+              <div style={{ 
+                fontSize: '0.45em', 
+                textAlign: 'center',
+                marginTop: '2px',
+                lineHeight: 1
+              }}>
                 {numberTimers[num.id].toFixed(1)}s
               </div>
             )}
